@@ -25,6 +25,8 @@ class Model : public QObject
     int colorIndex;
     int userColorIndex;
 
+    int buttonDisplayDelay;
+
     ///
     /// \brief Model::generateColor
     /// Generates red or blue randomly

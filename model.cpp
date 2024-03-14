@@ -20,6 +20,7 @@ Model::Model(QObject *parent)
     colorIndex = -1;
     userColorIndex = 0;
     lossLetterIndex = -1;
+    buttonDisplayDelay = 500;
 
     rng = std::default_random_engine{};
     rng.seed(time(NULL));
@@ -53,12 +54,16 @@ void Model::provideColors() {
     }
 
     // timer call back to display color
-    QTimer::singleShot(500, this, &Model::provideColors);
+    QTimer::singleShot(buttonDisplayDelay, this, &Model::provideColors);
 }
 
 void Model::nextLevel() {
     // generate a new color
     colors.push_back(generateColor());
+
+    buttonDisplayDelay -= 20;
+    if (buttonDisplayDelay <= 100)
+        buttonDisplayDelay = 100;
 
     // update state and progress bar for next level
     emit updateProgressBar(0, colors.size());
